@@ -8,9 +8,16 @@ import { useForm } from 'react-hook-form'
 const clamp = (min: number, val: number, max: number) => {
   return Math.min(Math.max(min, val), max)
 }
+
+const getByLocalStorage = (key: string) => {
+  if (typeof window !== "undefined") {
+    return localStorage.getItem(key)
+  }
+}
+
 const defaultValues = {
-  currentAge: Number(localStorage.getItem('currentAge')) || 25,
-  lifespan: Number(localStorage.getItem('lifespan')) || 100,
+  currentAge: Number(getByLocalStorage('currentAge')) || 25,
+  lifespan: Number(getByLocalStorage('lifespan')) || 90,
 }
 
 export default function Page() {
@@ -18,7 +25,6 @@ export default function Page() {
     defaultValues
   })
   const { currentAge, lifespan } = form.watch()
-  console.log({ currentAge })
   return (
     <main className={styles.main}>
       <div className={styles.inputContainer}>
